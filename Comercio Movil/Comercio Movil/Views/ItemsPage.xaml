@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Comercio_Movil.Views.ItemsPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Comercio_Movil.ViewModels"  
+             xmlns:model="clr-namespace:Comercio_Movil.Models"  
+             x:Name="BrowseItemsPage"
+             BackgroundImageSource="https://i.pinimg.com/originals/21/b8/39/21b8392a4383022b5288a384aacf379a.jpg">
+
+    <!--
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    -->
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid Grid.Row="0"  Margin="20,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Neaq" FontAttributes="Bold" Grid.Row="0" FontSize="35" Grid.Column="0" TextColor="White"/>
+                <ImageButton Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Source="https://cavaguilera.com/wp-content/themes/foundationpress_2019-04-24_19-02/dist/assets/images/iconos/carritoMobile.png"
+                             HeightRequest="35" WidthRequest="35"
+                             BackgroundColor="Transparent"
+                             Margin="0,0,10,0" HorizontalOptions="End"
+                             Command="{Binding ShowCarrito}"/>
+
+                <ImageButton Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Source="https://lh3.googleusercontent.com/proxy/_eOinhvTXmVzLawF6u_4r9D_blDn2jm-mwpw-VLvS7WOLtcaZpK4OEr8C56oIB-r1rfnOAYkvC_8u0vjifZLJd1qrzrvthtbzbM8Ugnh8FH2Ajr0"
+                             HeightRequest="30" WidthRequest="30" BackgroundColor="Transparent"
+                             Margin="0,0,10,0" HorizontalOptions="End"
+                             Command="{Binding CerrarSesion}"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0" Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <SearchBar Grid.Column="0" Placeholder="Buscar Producto" PlaceholderColor="LightGray"
+                           HorizontalOptions="Fill" TextColor="White" BackgroundColor="Black" Opacity="0.5"
+                           CancelButtonColor="White"/>
+                <ImageButton Grid.Column="1" Source="https://cdn1.iconfinder.com/data/icons/pointed-edge-web-navigation/117/search-512.png"
+                          HeightRequest="20" WidthRequest="20" BackgroundColor="Transparent"
+                          Margin="0,0,10,0" HorizontalOptions="End"/>
+            </Grid>
+
+            <Label Grid.Row="3" Text="Productos" FontSize="25" TextColor="White" Margin="20,0"/>
+
+            <CollectionView ItemsSource="{Binding Items}"
+                            Margin="20,10"
+                            VerticalOptions="Start"
+                            HorizontalScrollBarVisibility="Never"
+                            Grid.Row="4">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="0,10"  x:DataType="model:Item">
+                            <Grid BackgroundColor="#1F1F1F" HeightRequest="110" Padding="0,25,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Row="0" Grid.Column="0" HasShadow="False" BackgroundColor="Black" WidthRequest="60" HeightRequest="50" Margin="10,0,0,0">
+                                    <Image Source="{Binding Imagen}" Aspect="AspectFit" ></Image>
+                                </Frame>
+                                <Label Text="{Binding Text}" 
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center"
+                                    LineBreakMode="NoWrap" 
+                                    FontSize="16" />
+                                <Label 
+                                    Text="{Binding Precio, StringFormat='{0:c}'}" 
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    TextColor="White"
+                                    Margin="0,0,10,0"
+                                    VerticalTextAlignment="Center"
+                                    HorizontalTextAlignment="End"
+                                    LineBreakMode="NoWrap" 
+                                    FontSize="16" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+</ContentPage>
+    
+<!--BackgroundImage="BackgroundImage.png"-->

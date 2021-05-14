@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Comercio_Movil.Views.ItemDetailPage"
+             Title="{Binding Title}"
+             BackgroundImageSource="https://i.pinimg.com/originals/21/b8/39/21b8392a4383022b5288a384aacf379a.jpg">
+
+
+    <ScrollView>
+        <StackLayout>
+            <StackLayout BackgroundColor="Black" HeightRequest="50">
+                <ImageButton Source="https://www.materialui.co/materialIcons/navigation/arrow_back_white_192x192.png" Aspect="AspectFit"
+                                     HeightRequest="30" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="12,0"
+                                     BackgroundColor="Transparent" Grid.Row="0" Command="{Binding Inicio}"/>
+            </StackLayout>
+
+            <Label Text="{Binding Text}" Padding="15,0" FontSize="25" TextColor="White" FontAttributes="Bold" Margin="0,-8" BackgroundColor="Black"/>
+            <StackLayout BackgroundColor="Black" HeightRequest="350">
+                <Image Source="{Binding Imagen}" HeightRequest="200" Aspect="AspectFit" VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <StackLayout Spacing="20" Padding="15">
+                <Label Text="{Binding Description}" FontSize="20" TextColor="#BEBEBE"/>
+                <Label Text="{Binding Precio, StringFormat='{0:c}'}" FontSize="25" TextColor="#BEBEBE" HorizontalOptions="Center"/>
+            </StackLayout>
+            <Button Text="Agregar al carrito" HeightRequest="50" CornerRadius="15"
+                                BackgroundColor="#2A2A2A" VerticalOptions="End" HorizontalOptions="Center"
+                                Command="{Binding Cart}"/>
+        </StackLayout>
+    </ScrollView>
+   
+
+</ContentPage>
+
+
+    
+<!--https://e7.pngegg.com/pngimages/131/677/png-clipart-arrow-icon-arrow-symbol-text-logo.png-->
